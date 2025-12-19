@@ -1,0 +1,251 @@
+{
+  "博主名称": "陶白白",
+  "评估时间": "2025-12-18 14:57:52",
+  "评估版本": "增强版（针对有限数据）",
+  "数据概况": {
+    "total_posts": 372,
+    "analysis_posts": 174,
+    "interaction_data_available": "True"
+  },
+  "内容维度得分": 39.81707717569787,
+  "传播维度得分": 32.089898023338556,
+  "心理维度得分": 25.982590053971464,
+  "综合评分": 32.656852937385835,
+  "评估等级": "不足",
+  "治理建议": "需要全面优化，重新评估内容策略和用户定位",
+  "内容维度详情": {
+    "text_length": {
+      "mean": 95.75862068965517,
+      "median": 112.5,
+      "std": 51.299858706324116,
+      "min": "11",
+      "max": "190"
+    },
+    "length_distribution": {
+      "长(140-200)": 0.3505747126436782,
+      "超短(<50)": 0.28735632183908044,
+      "中等(100-140)": 0.1839080459770115,
+      "短(50-100)": 0.1781609195402299,
+      "较长(200-500)": 0.0,
+      "超长(>500)": 0.0
+    },
+    "themes": {
+      "星座运势": {
+        "post_count": "84",
+        "post_ratio": 0.4827586206896552,
+        "keyword_density": 9.662705557556116
+      },
+      "情感咨询": {
+        "post_count": "72",
+        "post_ratio": 0.41379310344827586,
+        "keyword_density": 8.642419877565718
+      },
+      "职业发展": {
+        "post_count": "28",
+        "post_ratio": 0.16091954022988506,
+        "keyword_density": 3.180890649381827
+      },
+      "学业指导": {
+        "post_count": "16",
+        "post_ratio": 0.09195402298850575,
+        "keyword_density": 1.9805545552754773
+      },
+      "心理分析": {
+        "post_count": "29",
+        "post_ratio": 0.16666666666666666,
+        "keyword_density": 2.3406553835073822
+      },
+      "行动指导": {
+        "post_count": "44",
+        "post_ratio": 0.25287356321839083,
+        "keyword_density": 3.180890649381827
+      }
+    },
+    "content_features": {
+      "rational_mean": 0.25862068965517243,
+      "action_mean": 0.3448275862068966,
+      "comfort_mean": 0.05172413793103448,
+      "has_rational": 0.21839080459770116,
+      "has_action": 0.28160919540229884,
+      "has_comfort": 0.05172413793103448
+    },
+    "quality": {
+      "theme_diversity": 0.8333333333333334,
+      "avg_length_score": 0.6839901477832513,
+      "structure_score": 0.28160919540229884,
+      "rationality_score": 0.21839080459770116
+    },
+    "signatures": {
+      "星座运势分析": 0.0,
+      "理性预测": 0.0,
+      "行动清单": 0.0,
+      "情感指导": 0.0,
+      "心理分析": 0.0,
+      "MBTI性格": 0.0,
+      "复合建议": 0.0,
+      "水逆指南": 0.0
+    },
+    "signature_match": 0.0
+  },
+  "传播维度详情": {
+    "reach": {
+      "total_posts": 372,
+      "related_posts": 174,
+      "coverage_ratio": 0.46774193548387094,
+      "user_count": 161
+    },
+    "content_potential": {
+      "has_questions": 0.06896551724137931,
+      "has_exclamations": 0.2413793103448276,
+      "has_hashtags": 0.005747126436781609,
+      "has_mentions": 0.0,
+      "avg_sentence_length": 20.595797280593327
+    },
+    "engagement_potential": 0.0706896551724138,
+    "hashtags": {
+      "total_unique": 65,
+      "top_hashtags": {
+        "星座": 12,
+        "运势": 8,
+        "狙击蝴蝶分手复合在同一集": 6,
+        "一分钟视频创作季": 5,
+        "复合": 4,
+        "狙击蝴蝶 分手复合在同一集": 4,
+        "金牌剪刀手": 3,
+        "白桃星座": 2,
+        "星盘": 2,
+        "运势 ﻿ ﻿": 2
+      },
+      "avg_per_post": 0.6379310344827587
+    },
+    "user_engagement": {
+      "total_users": 161,
+      "active_users": "10",
+      "top_users": {
+        "胖叔占星": "3",
+        "关怀的天文世界": "3",
+        "Ezoey徐佩玲": "3",
+        "GoddessCheng程女神": "2",
+        "同道大叔": "2"
+      },
+      "gini_coefficient": 0.07082173199114726
+    }
+  },
+  "心理维度详情": {
+    "emotion_analysis": {
+      "positive": {
+        "total": "28",
+        "mean": 0.16091954022988506,
+        "posts_with": "24",
+        "ratio": 0.13793103448275862
+      },
+      "negative": {
+        "total": "17",
+        "mean": 0.09770114942528736,
+        "posts_with": "14",
+        "ratio": 0.08045977011494253
+      },
+      "neutral": {
+        "total": "117",
+        "mean": 0.6724137931034483,
+        "posts_with": "76",
+        "ratio": 0.4367816091954023
+      }
+    },
+    "emotion_balance": {
+      "positive_ratio": 0.13793103448275862,
+      "negative_ratio": 0.08045977011494253,
+      "balance_score": 0.7380415989940798,
+      "dominant_emotion": "positive"
+    },
+    "psychological_needs": {
+      "情感需求": {
+        "posts": "69",
+        "ratio": 0.39655172413793105,
+        "intensity": 1.028735632183908
+      },
+      "认知需求": {
+        "posts": "22",
+        "ratio": 0.12643678160919541,
+        "intensity": 0.15517241379310345
+      },
+      "安全需求": {
+        "posts": "6",
+        "ratio": 0.034482758620689655,
+        "intensity": 0.05172413793103448
+      },
+      "归属需求": {
+        "posts": "18",
+        "ratio": 0.10344827586206896,
+        "intensity": 0.14367816091954022
+      },
+      "成长需求": {
+        "posts": "18",
+        "ratio": 0.10344827586206896,
+        "intensity": 0.12643678160919541
+      },
+      "尊重需求": {
+        "posts": "2",
+        "ratio": 0.011494252873563218,
+        "intensity": 0.011494252873563218
+      }
+    },
+    "primary_needs": {
+      "情感需求": 0.39655172413793105,
+      "认知需求": 0.12643678160919541,
+      "归属需求": 0.10344827586206896
+    },
+    "support_analysis": {
+      "advice_given": {
+        "posts": "42",
+        "ratio": 0.2413793103448276,
+        "effectiveness": 3.0
+      },
+      "comfort_provided": {
+        "posts": "4",
+        "ratio": 0.022988505747126436,
+        "effectiveness": 0.2857142857142857
+      },
+      "solution_offered": {
+        "posts": "7",
+        "ratio": 0.040229885057471264,
+        "effectiveness": 0.5
+      },
+      "hope_inspired": {
+        "posts": "17",
+        "ratio": 0.09770114942528736,
+        "effectiveness": 1.2142857142857142
+      }
+    },
+    "support_index": 0.10057471264367816,
+    "behavior_analysis": {
+      "action_intent": {
+        "posts": "65",
+        "ratio": 0.3735632183908046,
+        "engagement": 37.35632183908046
+      },
+      "goal_setting": {
+        "posts": "7",
+        "ratio": 0.040229885057471264,
+        "engagement": 4.022988505747127
+      },
+      "progress_sharing": {
+        "posts": "14",
+        "ratio": 0.08045977011494253,
+        "engagement": 8.045977011494253
+      },
+      "help_seeking": {
+        "posts": "4",
+        "ratio": 0.022988505747126436,
+        "engagement": 2.2988505747126435
+      }
+    },
+    "behavior_index": 0.12931034482758622,
+    "anxiety_management": {
+      "anxiety_mentioned": 0.017241379310344827,
+      "solutions_provided": 0.022988505747126436,
+      "targeted_solutions": 0.0,
+      "anxiety_coverage": 0.0
+    }
+  }
+}

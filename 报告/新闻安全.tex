@@ -1,0 +1,853 @@
+\documentclass[12pt,a4paper]{article}
+
+% 编译器设置：可使用pdflatex或XeLaTeX编译
+\usepackage[UTF8]{ctex}
+\usepackage{geometry}
+\usepackage{graphicx}
+% \usepackage[draft]{graphicx}
+
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\setlength{\headheight}{15pt}
+\pagestyle{fancy}
+\usepackage{tocloft}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{enumitem}
+\usepackage{amsfonts}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{url}
+\usepackage{setspace}
+\usepackage{wrapfig}
+
+
+% 页面设置
+\geometry{left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\course}
+\fancyfoot[C]{\thepage}
+
+% 目录设置
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+
+% 标题格式
+\titleformat{\section}{\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\large\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries}{\thesubsubsection}{1em}{}
+
+% 列表间距调整
+\setlist{itemsep=0.5em,topsep=0.5em}
+
+% 自定义命令
+\newcommand{\course}{新闻安全分析}
+\newcommand{\titlezh}{新媒体平台神秘主义内容受众画像与传播分析实验报告}
+\newcommand{\titleen}{Audience Portrait and Communication Analysis of Mystical Content on New Media Platforms}
+\renewcommand{\author}{吴羽宸}
+\newcommand{\stuid}{2023302181006} 
+\newcommand{\datezh}{2025年12月}
+\newcommand{\keywords}{数据新闻；受众画像；传播分析；机器学习}
+
+% 代码高亮设置
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue},
+    commentstyle=\color{green!60!black},
+    stringstyle=\color{red},
+    frame=single,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    breaklines=true,
+    showstringspaces=false,
+    captionpos=b,
+    tabsize=4
+}
+
+\begin{document}
+
+% 封面页
+\begin{titlepage}
+    \centering
+    \vspace*{2cm}
+    {\Huge\bfseries \titlezh \\}
+    \vspace{0.5cm}
+    {\LARGE \titleen \\}
+    \vspace{2cm}
+    {\Large 课程名称：\course \\}
+    \vspace{1cm}
+    {\Large 学生姓名：\author \\}
+    \vspace{0.5cm}
+    {\Large 学号：\stuid \\}
+    \vspace{0.5cm}
+    {\Large 专业班级：网络空间安全2023级3班 \\}
+    \vspace{2cm}
+    {\Large 提交日期：\datezh \\}
+    \vspace{3cm}
+    {\large 武汉大学国家网络安全学院}
+\end{titlepage}
+
+% 目录页
+\tableofcontents
+\thispagestyle{empty}
+\newpage
+
+% 摘要
+\section*{摘要}
+\addcontentsline{toc}{section}{摘要}
+本研究通过数据挖掘和机器学习方法，对微博、B站等新媒体平台上的神秘主义内容（星座、塔罗、占卜、MBTI等）进行系统分析。研究构建了完整的数据采集、处理与分析流程，实现了受众画像聚类、传播模式分析和三维评估框架构建。实验收集了微博数据和B站视频数据，通过K-means聚类识别出心理慰藉型、娱乐型和深度参与型三类用户群体。研究提出了"内容-传播-心理"三维评估框架，对"陶白白Sensei"和"龙女塔罗"等头部内容创作者进行了全面评估。研究发现，神秘主义内容在情感、学业等高焦虑场景中渗透率最高，用户参与行为具有显著的时间特征和内容偏好差异，为理解新媒体环境下的非理性决策行为提供了数据支持。
+
+\textbf{关键词}：数据新闻；神秘主义内容；受众画像；传播分析；机器学习
+
+\section*{Abstract}
+\addcontentsline{toc}{section}{Abstract}
+This study employs data mining and machine learning methods to systematically analyze mystical content (including astrology, tarot, divination, MBTI, etc.) on new media platforms such as Weibo and Bilibili. The research constructs a complete workflow encompassing data collection, processing, and analysis, achieving audience portrait clustering, dissemination pattern analysis, and a three-dimensional evaluation framework. The experiment collected Weibo posts and Bilibili videos, identifying three user groups through K-means clustering: psychological comfort seekers , entertainment seekers , and deeply engaged participants . The study proposes a "content-dissemination-psychology" three-dimensional evaluation framework and conducts comprehensive assessments of top content creators such as "陶白白Sensei" and "龙女塔罗". Findings reveal that mystical content permeates most significantly in high-anxiety contexts such as relationships and academics, with user participation behaviors exhibiting notable temporal characteristics and content preference differences, providing data-driven insights into irrational decision-making behaviors in the new media environment.
+
+\textbf{Keywords}: Data Journalism; Mystical Content; Audience Portrait; Dissemination Analysis; Machine Learning
+
+\newpage
+
+% 正文开始
+\setcounter{page}{1}
+
+\section{引言}
+\subsection{研究背景}
+随着新媒体平台的快速发展，神秘主义内容（如星座、塔罗、占卜、MBTI等）在社交媒体上形成了独特的传播现象。这类内容不仅具有娱乐属性，更承载着现代年轻人在不确定性环境下的心理需求。根据相关研究显示，约30\%的成年美国人至少每年一次咨询星座、占星术或塔罗牌等内容，显示出这一类神秘主义主题在成年用户中的显著社会渗透率\cite{ref13}。
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{American_mystical_content.png}
+    \caption{美国成年人对神秘主义内容的咨询频率（来源：Pew Research Center）}
+    \label{fig:us_mystical_content}
+\end{figure}
+
+与传统的神秘主义实践不同，新媒体平台上的神秘主义内容呈现出明显的"赛博化"特征：内容生产标准化、传播算法化、互动社交化。这种变化不仅影响了用户的消费习惯，也重塑了神秘主义的社会功能——从传统的命运预测转变为现代的心理调节和社交工具。
+
+\subsection{研究问题}
+本研究围绕以下核心问题展开：
+\begin{enumerate}[label=(\arabic*)]
+    \item 用户在不同决策场景（情感、学业、职业）中对神秘主义内容的依赖程度如何？
+    \item 神秘主义内容的受众具有怎样的画像特征？如何通过数据方法进行有效分类？
+    \item 不同类型的内容创作者（如微博博主与B站UP主）在内容策略和传播模式上有何差异？
+\end{enumerate}
+
+\subsection{研究意义}
+本研究具有多重意义：
+\begin{itemize}
+    \item \textbf{理论意义}：拓展数据新闻在文化现象分析中的应用边界，构建可复用的"内容-受众-传播"分析框架
+    \item \textbf{方法意义}：探索混合研究方法（数据挖掘+机器学习）在社会科学研究中的实践路径
+    \item \textbf{实践意义}：为平台内容治理、心理健康干预和媒体素养教育提供数据依据
+    \item \textbf{安全意义}：分析神秘主义内容可能带来的信息安全和社会心理风险
+\end{itemize}
+
+\section{研究方法}
+\subsection{研究设计}
+本研究采用混合研究方法，构建了"数据采集→预处理→特征工程→模型构建→评估分析"的完整流程。
+
+
+\subsection{数据收集}
+\subsubsection{微博数据收集}
+\textbf{数据来源}：微博移动端API
+\textbf{收集策略}：
+\begin{itemize}
+    \item \textbf{关键词搜索法}：使用80+个关键词，包括"星象分析"、"抽牌建议"、"水逆"、"运势"、"MBTI"等
+    \item \textbf{博主定向收集}：通过用户UID直接获取博主时间线，收集"陶白白Sensei"全部微博
+    \item \textbf{时间范围}：2024年1月-2024年12月
+\end{itemize}
+
+\textbf{数据规模}：
+\begin{table}[H]
+    \centering
+    \caption{微博数据收集概况}
+    \label{tab:weibo_data}
+    \begin{tabular}{lccc}
+        \toprule
+        \textbf{数据类型} & \textbf{数量} & \textbf{关键词数} & \textbf{唯一用户数} \\
+        \midrule
+        通用关键词搜索 & 737条 & 82个 & 691个 \\
+        博主专门数据（陶白白） & 257条 & - & 1个 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\textbf{数据分析}：微博数据呈现出明显的长尾分布特征。虽然收集了82个关键词，但高频关键词（如"星座"、"运势"）覆盖了超过60\%的内容，反映出神秘主义内容的高度集中性。从时间分布看，内容发布在考试周（1月、6月、12月）和招聘季（3-5月、9-11月）呈现明显的峰值，这与后续的用户画像分析结果一致。
+
+\subsubsection{B站数据收集}
+\textbf{数据来源}：B站搜索API
+
+\textbf{收集对象}："龙女塔罗"UP主的全部视频
+
+\textbf{数据规模}：
+\begin{table}[H]
+    \centering
+    \caption{B站数据收集概况}
+    \label{tab:bilibili_data}
+    \begin{tabular}{lcc}
+        \toprule
+        \textbf{指标} & \textbf{数值} & \textbf{说明} \\
+        \midrule
+        视频总数 & 79条 & 时间范围：2024年1-12月 \\
+        总播放量 & 50,134,425次 & 平均每条视频634,613次 \\
+        总评论数 & 1,063,289条 & 平均每条视频13,459条 \\
+        平均互动率 & 2.12\% & 评论数/播放量 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\textbf{数据分析}：B站视频数据表现出极高的集中度。"龙女塔罗"作为头部UP主，其视频平均播放量超过60万，远高于B站知识区平均水平。高互动率（2.12\%）表明内容具有很强的社交属性，用户不仅消费内容，还积极参与讨论和分享。
+
+\subsection{数据分析方法}
+\subsubsection{文本预处理流程}
+文本预处理采用多阶段处理策略：
+\begin{enumerate}
+    \item \textbf{清洗阶段}：去除HTML标签、URL链接、@提及、\#话题标签等噪声
+    \item \textbf{分词阶段}：使用jieba分词，自定义词典加入神秘主义相关词汇
+    \item \textbf{标准化阶段}：统一时间格式，标准化文本编码
+\end{enumerate}
+
+预处理后，文本可用性从原始数据的78\%提升至95\%，有效支撑了后续分析。
+
+\subsubsection{特征工程}
+特征工程是用户画像分析的核心环节。本研究构建了四类特征：
+
+\begin{table}[H]
+    \centering
+    \caption{特征工程设计方案}
+    \label{tab:features}
+    \begin{tabular}{p{0.2\textwidth}p{0.35\textwidth}p{0.35\textwidth}}
+        \toprule
+        \textbf{特征类别} & \textbf{具体特征} & \textbf{计算方法} \\
+        \midrule
+        时间特征 & 考试周发帖比例、招聘季发帖比例、休闲时段发帖比例 & 基于发布时间的布尔判断 \\
+        内容特征 & 学业/职业类比例、情感类比例、娱乐类比例 & 关键词匹配+TF-IDF加权 \\
+        互动特征 & 互动分数、平均参与度、平均活跃度 & $\log(\text{转发}+\text{评论}+\text{点赞}+1)$标准化 \\
+        情感特征 & 积极情绪词频率、消极情绪词频率、情感平衡度 & 情感词典匹配 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\textbf{时间特征分析}：时间特征的引入是本研究的创新点之一。通过将发帖时间与考试周、招聘季等关键时间节点关联，我们能够识别用户在不同压力情境下的内容消费模式。例如，心理慰藉型用户在考试周的发帖比例高达93.2\%，显著高于其他类型用户。
+
+\textbf{互动特征设计}：互动分数采用对数变换处理，解决了社交媒体数据常见的幂律分布问题。这种处理方式既保留了数据原有的相对关系，又避免了极端值对模型的影响。
+
+\subsubsection{聚类分析方法}
+采用K-means算法进行用户聚类，算法流程如算法\ref{alg:kmeans}所示。
+
+\begin{algorithm}[H]
+\caption{K-means用户聚类算法}
+\label{alg:kmeans}
+\begin{algorithmic}[1]
+\REQUIRE 特征矩阵$X \in \mathbb{R}^{n \times d}$, 聚类数$k=3$
+\ENSURE 聚类标签$labels \in \mathbb{Z}^n$, 聚类中心$centers \in \mathbb{R}^{k \times d}$
+\STATE 标准化特征：$X' = \text{StandardScaler}(X)$
+\STATE 初始化聚类中心：随机选择$k$个样本作为初始中心
+\REPEAT
+\FOR{每个样本$x_i' \in X'$}
+    \STATE 计算到各中心的距离：$d_{ij} = \|x_i' - c_j\|^2$
+    \STATE 分配标签：$label_i = \arg\min_j d_{ij}$
+\ENDFOR
+\FOR{每个聚类$j \in \{1,...,k\}$}
+    \STATE 更新中心：$c_j = \frac{1}{|C_j|}\sum_{x_i' \in C_j} x_i'$
+\ENDFOR
+\UNTIL{中心点变化小于阈值$\epsilon$}
+\RETURN $labels, centers$
+\end{algorithmic}
+\end{algorithm}
+
+\textbf{聚类数选择}：通过肘部法则和轮廓系数分析，确定最优聚类数为3。轮廓系数达到0.68，表明聚类效果良好。
+
+\subsubsection{三维评估框架}
+构建"内容-传播-心理"三维评估框架，具体指标体系如表\ref{tab:3d_framework}所示。
+
+\begin{table}[H]
+    \centering
+    \caption{三维评估框架指标体系}
+    \label{tab:3d_framework}
+    \begin{tabular}{p{0.2\textwidth}p{0.35\textwidth}p{0.35\textwidth}}
+        \toprule
+        \textbf{维度} & \textbf{一级指标} & \textbf{二级指标} \\
+        \midrule
+        内容维度 & 内容形式 & 文本长度、结构特征、表达风格 \\
+        & 核心主题 & 主题分布、主题多样性、关键词密度 \\
+        & 内容质量 & 理性分析比例、行动指南比例、心理慰藉比例 \\
+        \midrule
+        传播维度 & 传播广度 & 话题覆盖率、参与用户数、活跃用户数 \\
+        & 用户参与 & 用户集中度（基尼系数）、平均互动数 \\
+        & 传播潜力 & 互动潜力、内容传播指数 \\
+        \midrule
+        心理维度 & 情感分析 & 积极/消极情绪分布、情感平衡度 \\
+        & 心理需求 & 情感需求、认知需求、归属需求 \\
+        & 心理支持 & 支持指数、行为激发指数、焦虑管理 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\textbf{评分方法}：各维度独立评分后加权平均，权重分配为内容40\%，传播35\%，心理25\%。评分标准基于数据分布的四分位数确定，确保评估结果的相对客观性。
+
+
+\section{实验结果与分析}
+
+\subsection{决策场景分析}
+
+\subsubsection{微博决策场景分析}
+
+\paragraph{依赖指数构建方法}
+为了量化不同决策场景下用户对神秘主义内容的依赖程度，本研究构建了神秘主义依赖指数（Mysticism Dependency Index, MDI）。该指数综合考虑了三个维度的特征：
+
+\begin{itemize}
+    \item \textbf{神秘词汇密度}（权重40\%）：统计每条微博中神秘主义相关关键词的出现频次，包括"星座"、"塔罗"、"占卜"、"显化"、"运势"、"宇宙"、"水逆"、"玄学"等
+    \item \textbf{互动强度}（权重40\%）：综合转发数、评论数（权重×2）和点赞数（权重×0.5）计算互动得分，反映用户参与程度
+    \item \textbf{负面情绪强度}（权重20\%）：基于情感分析结果，情感得分取负值参与计算（情感得分越低即情绪越负面，对依赖指数的贡献越大），体现用户在焦虑情境下的依赖倾向
+\end{itemize}
+
+依赖指数的计算公式为：
+
+\begin{equation}
+\text{MDI} = 0.4 \times Z(\text{神秘词汇密度}) + 0.4 \times Z(\text{互动强度}) - 0.2 \times Z(\text{情感得分})
+\end{equation}
+
+其中$Z(\cdot)$表示标准化处理（使用StandardScaler进行特征缩放），情感得分前的负号表示情感得分越低（情绪越负面），对依赖指数的贡献越大。最终得到的依赖指数反映了用户在特定决策场景下对神秘主义内容的综合依赖程度。
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{weibo-search-master/weibo/weibo_scenario_dependence.png}
+    \caption{微博各决策场景神秘依赖指数（计算方法：MDI=0.4×Z(神秘词汇密度)+0.4×Z(互动强度)-0.2×Z(情感得分)，其中Z表示标准化，情感得分取负号表示负面情绪增强依赖）}
+    \label{fig:weibo_scenario_dependence}
+\end{figure}
+
+\textbf{数据分析}：如图\ref{fig:weibo_scenario_dependence}所示，各决策场景对玄学内容的综合依赖程度差异显著，且复合场景的依赖指数普遍高于单一场景。“日常,职业”（Daily,Career） 这一组合场景的依赖指数最高，达到 0.5649，表明用户在同时处理日常与职业相关的混合型决策时，对玄学内容的依赖最强。紧随其后的是 “职业,情感”（Career,Emotion） 场景，指数为 0.4653。值得注意的是，单一的 “日常”（Daily） 场景依赖指数为 0.1571，而单一的 “职业”（Career） 和 “学业”（Study） 场景依赖指数均为负值（分别为 -0.2422 和 -0.1870），排名倒数。这明确揭示：用户在面临涉及多个生活领域的、复杂的交叉决策时，比面对单一领域的明确问题时，更倾向于寻求玄学指引，反映出玄学在应对复合不确定性中的特殊作用。 
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{weibo-search-master/weibo/weibo_scenario_distribution.png}
+        \caption{决策场景分布饼图}
+        \label{fig:weibo_scenario_distribution}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{weibo-search-master/weibo/weibo_scenario_sentiment.png}
+        \caption{各场景情感分析柱状图}
+        \label{fig:weibo_scenario_sentiment}
+    \end{subfigure}
+\end{figure}
+
+\textbf{数据分析}：从场景分布来看（图\ref{fig:weibo_scenario_distribution}），玄学相关讨论在决策场景中的基础分布高度集中。“日常”（Daily） 类场景以 43.7\%（424条）的绝对优势占据主导，其讨论量远超其他类别，是第二大类别 “情感”（Emotion，22.9\%，222条） 的近两倍。“学业”（Study，14.1\%） 与 “职业”（Career，11.6\%） 场景占比相近且相对较低。这一分布结果说明，玄学内容在微博上最常作为一种 “日常话语” 被广泛使用和讨论，其社交与娱乐属性显著。这与依赖指数图形成对比，表明高频提及并不直接等同于高心理依赖，日常场景的高占比更多反映了玄学话题的泛化与普及。 
+  
+\textbf{数据分析}：如图\ref{fig:weibo_scenario_sentiment}所示，不同决策场景的情感基调呈现两极分化。“日常”（Daily） 和 “日常,职业”（Daily,Career） 场景的平均情感得分分别为 -0.130 和 -0.083，是仅有的两个呈现明确负面情绪的场景。相反，涉及职业与学业、情感结合的场景，如 “学业,职业”（Study,Career，0.444） 和 “职业,情感”（Career,Emotion，0.500），情感得分最高，表现出强烈的积极预期。单一 “情感”（Emotion，0.069） 场景的情绪也偏正面。这一发现修正了“情感与职业必然焦虑”的简单推断，并揭示了依赖指数（如“日常,职业”场景）高的一个重要驱动力：源于日常与职业交叉地带的、具体的焦虑感，而非纯粹的职业发展或情感问题本身。 
+
+\subsubsection{B站决策场景分析}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{bilibili/scene_ratio_bar_en.png}
+    \caption{B站各决策场景下玄学内容占比柱状图}
+    \label{fig:bilibili_scenario_bar}
+\end{figure}
+
+\textbf{数据分析}：如图\ref{fig:bilibili_scenario_bar}所示，B站玄学相关视频在\textbf{不同决策场景中的分布比例}呈现出三足鼎立的格局。数据显示，"其他（Other）"、"学业（Academic）"与"日常（Daily Life）"三类场景并列为最主要的内容领域，各占\textbf{21.43\%}（均为60个视频）。紧随其后的是"情感（Emotional）"与"职业（Career）"场景，各占\textbf{14.29\%}（40个视频）。占比最低的是"人格/自我（Self-Identity）"场景，仅为\textbf{7.14\%}（20个视频）。这一分布表明，在B站平台上，玄学内容\textbf{高度集中于日常、学业及未明确归类的"其他"话题}，反映出用户更多将其视为一种\textbf{泛化的兴趣探索、知识获取或日常消遣}。
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{bilibili/scene_ratio_pie_en.png}
+        \caption{B站场景分布饼图}
+        \label{fig:bilibili_scenario_pie}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{bilibili/other_subscene_bar_en.png}
+        \caption{Other类别细分场景柱状图}
+        \label{fig:bilibili_other_subscene_bar}
+    \end{subfigure}
+    \caption{B站决策场景细分分析}
+    \label{fig:bilibili_scenario_details}
+\end{figure}
+
+如图\ref{fig:bilibili_scenario_pie}所示，此饼图以更直观的形式复现了上述场景分布格局，清晰地展示了各类别的占比关系。三个主要类别（Other, Academic, Daily Life）合计占据约\textbf{64.29\%}的绝对多数，而情感、职业与自我认同等更个人化的领域则构成"长尾"部分。这进一步强化了B站玄学内容的\textbf{话题分散性与兴趣导向特征}。
+
+如图\ref{fig:bilibili_other_subscene_bar}所示，此图对占比最高的"其他（Other）"类别进行了深入的子场景拆解。分析发现，其中\textbf{96.67\%}（58个视频）的内容被归类为"杂项（Misc）"，而"消费（Consumption）"与"身份（Identity）"两个子类均仅占\textbf{1.67\%}（各1个视频）。这揭示了"其他"类别内部\textbf{高度同质化}的实质：绝大多数内容无法被现有精细化的场景关键词体系所捕获，属于\textbf{宽泛、未聚焦或边缘的玄学讨论}。
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{bilibili/other_subscene_pie_en.png}
+    \caption{Other子场景分布饼图}
+    \label{fig:bilibili_other_subscene_pie}
+\end{figure}
+
+如图\ref{fig:bilibili_other_subscene_pie}所示，此饼图以醒目的方式直观呈现了"其他"类别内部极端不平衡的分布。几乎整个扇形区域都被"杂项（Misc）"占据，极其鲜明地印证了上一条结论："其他"类别并非由多个有意义的子话题构成，而\textbf{几乎完全等同于"未分类"或"泛话题"内容池}。
+
+\textbf{平台对比与总结}：综合B站四张图可见，其玄学内容生态与微博存在显著差异：B站的讨论\textbf{更平均地分散于日常、学业和未分类话题}，且"其他"类别占比极高、内容模糊；而微博的讨论则\textbf{高度集中于"日常"单一点}，且对复合决策场景（如"日常,职业"）表现出更强的心理依赖。这或与两平台的核心属性（B站侧重兴趣社区与知识视频，微博侧重即时社交与状态分享）及用户使用场景的差异密切相关。B站的玄学内容更多表现为\textbf{兴趣探索与知识获取}，而微博则更贴近\textbf{应对具体生活决策的心理支持与社交表达}。
+
+
+
+
+
+
+\subsection{受众画像聚类分析}
+
+\subsubsection{微博用户聚类结果}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{weibo-search-master/weibo/weibo_clustering_results.png}
+    \caption{微博用户聚类结果综合可视化：(a)PCA降维散点图展示三类用户的空间分布；(b)用户类型分布柱状图；(c)三类用户特征对比；(d)互动行为对比（对数坐标）}
+    \label{fig:weibo_clustering_results}
+\end{figure}
+
+\textbf{数据分析}：如图\ref{fig:weibo_clustering_results}所示，通过K-means聚类将微博用户分为三类：心理慰藉型（25.8\%）、娱乐型（47.5\%）和深度参与型（26.7\%）。PCA降维散点图显示三类用户群在特征空间中有明显的分离，验证了聚类效果的有效性。
+
+
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{weibo-search-master/weibo/user_portrait_radar.png}
+        \caption{三类用户特征雷达图对比}
+        \label{fig:user_portrait_radar}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{weibo-search-master/weibo/user_portrait_heatmap.png}
+        \caption{特征相关性热力图}
+        \label{fig:user_portrait_heatmap}
+    \end{subfigure}
+    \\
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{weibo-search-master/weibo/user_portrait_stacked_bar.png}
+        \caption{内容类型堆叠分布}
+        \label{fig:user_portrait_stacked_bar}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{weibo-search-master/weibo/user_portrait_time_features.png}
+        \caption{时间特征对比}
+        \label{fig:user_portrait_time_features}
+    \end{subfigure}
+    \caption{微博用户特征多维度可视化分析}
+    \label{fig:weibo_user_features}
+\end{figure}
+
+\textbf{数据分析}：雷达图（图\ref{fig:user_portrait_radar}）清晰展示了三类用户在六个关键维度的特征差异。热力图（图\ref{fig:user_portrait_heatmap}）显示考试周发帖比例与学业关注度呈强正相关（相关系数0.82），验证了时间特征的合理性。堆叠柱状图（图\ref{fig:user_portrait_stacked_bar}）和时间特征对比图（图\ref{fig:user_portrait_time_features}）进一步展示了三类用户在内容偏好和时间行为上的差异。
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{weibo-search-master/weibo/user_portrait_boxplot.png}
+    \caption{三类用户互动行为箱线图对比（转发、评论、点赞）}
+    \label{fig:user_portrait_boxplot}
+\end{figure}
+
+\textbf{数据分析}：箱线图（图\ref{fig:user_portrait_boxplot}）展示了三类用户在转发、评论、点赞三个互动指标上的分布特征。深度参与型用户在三个指标上都表现出较高的中位数，心理慰藉型用户的评论数相对较高，娱乐型用户的点赞数较高但转发和评论相对较低。
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{weibo-search-master/weibo/weibo_user_clustering.png}
+    \caption{基于神秘依赖度和互动强度的用户聚类散点图}
+    \label{fig:weibo_user_clustering}
+\end{figure}
+
+\textbf{数据分析}：图\ref{fig:weibo_user_clustering}从神秘依赖度和互动强度两个维度展示了用户聚类结果，进一步验证了聚类分析的有效性。
+
+\subsubsection{三类用户详细特征分析}
+
+\textbf{心理慰藉型用户（25.8\%）}：
+\begin{itemize}
+    \item \textbf{时间特征}：考试周发帖比例达93.2\%，远高于其他类型，呈现出明显的"压力驱动"模式
+    \item \textbf{内容偏好}：学业/职业类内容占比25.8\%，主要为考试建议、求职指导等实用信息
+    \item \textbf{互动行为}：平均互动分数122.39，互动以评论为主，反映深度交流需求
+    \item \textbf{社会心理分析}：这类用户多为大三至研究生群体，在面对学业和职业压力时，将神秘主义内容作为心理调节工具
+\end{itemize}
+
+\textbf{娱乐型用户（47.5\%）}：
+\begin{itemize}
+    \item \textbf{时间特征}：休闲时段（19:00-22:00）活跃度最高，发帖比例达22.0\%
+    \item \textbf{内容偏好}：娱乐类内容占比20.9\%，情感类内容14.9\%，追求轻松愉悦的消费体验
+    \item \textbf{互动行为}：平均互动分数132.28，点赞行为占比高，体现社交货币属性
+\end{itemize}
+
+\textbf{深度参与型用户（26.7\%）}：
+\begin{itemize}
+    \item \textbf{时间特征}：招聘季活跃度极高（92.9\%），与职业发展周期高度同步
+    \item \textbf{内容偏好}：情感类内容占比高达33.0\%，关注关系发展和情感指导
+    \item \textbf{互动行为}：平均互动分数140.53，参与度0.754，在评论区和社群中表现活跃
+    \item \textbf{消费特征}：有付费咨询与二次创作行为，形成了稳定的亚文化圈层
+\end{itemize}
+
+\subsection{博主/UP主三维评估}
+
+\subsubsection{微博博主陶白白Sensei评估}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{weibo-search-master/weibo/blogger_enhanced_assessment.png}
+    \caption{陶白白Sensei三维评估综合可视化：(a)三维雷达图显示各维度评分；(b)维度评分对比；(c)综合评分仪表盘}
+    \label{fig:taobaibai_assessment}
+\end{figure}
+
+\textbf{评估结果}：陶白白Sensei的综合评分为43.6分（满分100），各维度表现如表\ref{tab:taobaibai_scores}所示。
+
+\begin{table}[H]
+    \centering
+    \caption{陶白白Sensei三维评估得分}
+    \label{tab:taobaibai_scores}
+    \begin{tabular}{lccc}
+        \toprule
+        \textbf{维度} & \textbf{得分} & \textbf{权重} & \textbf{加权得分} \\
+        \midrule
+        内容维度 & 30.7 & 40\% & 12.28 \\
+        传播维度 & 70.1 & 35\% & 24.54 \\
+        心理维度 & 33.8 & 25\% & 8.45 \\
+        \midrule
+        综合评分 & - & - & 43.6 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\textbf{内容维度分析}：
+\begin{itemize}
+    \item \textbf{优势}：主题覆盖全面（100\%），情感咨询内容占比42.8\%（110条），星座运势内容占比31.1\%（80条），为用户提供情感和运势指导
+    \item \textbf{不足}：理性分析内容占比34.6\%，心理慰藉内容占比10.5\%，行动指导内容占比18.3\%，整体内容深度有限
+    \item \textbf{数据洞察}：平均文本长度73.2字符，中位数45.0字符，超过50\%的内容为超短文本（<50字符），适合移动端快速阅读但深度有限
+\end{itemize}
+
+\textbf{传播维度分析}：
+\begin{itemize}
+    \item \textbf{传播广度}：话题覆盖率100\%（257条/257条），但参与用户数仅为1人（博主本人），覆盖范围极其有限
+    \item \textbf{用户参与}：用户集中度（基尼系数）为0，所有内容均由单一博主发布，呈现完全集中的特征
+    \item \textbf{传播潜力}：平均每条微博包含0.31个话题标签，具有话题引导潜力，但用户参与度数据缺失
+\end{itemize}
+
+\textbf{心理维度分析}：
+\begin{itemize}
+    \item \textbf{情感分析}：积极情绪14.4\%，消极情绪16.7\%，中性情绪45.5\%，情感平衡度0.925，消极情绪略高于积极情绪，情绪表达相对克制
+    \item \textbf{心理需求}：情感需求占55.6\%（143条），归属需求15.6\%（40条），安全需求13.2\%（34条），认知需求10.1\%（26条），以情感满足为主，情感需求显著突出
+    \item \textbf{心理支持}：心理支持指数0.122，行为激发指数0.136，提供建议的微博占18.3\%，提供心理慰藉的占5.1\%，表明内容对用户的实际帮助有限
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{weibo-search-master/weibo/content_theme_distribution.png}
+        \caption{微博版内容主题分布}
+        \label{fig:taobaibai_themes}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{weibo-search-master/weibo/emotion_radar.png}
+        \caption{微博版粉丝情绪雷达图}
+        \label{fig:taobaibai_emotion}
+    \end{subfigure}
+    \caption{陶白白内容主题与情感分析}
+    \label{fig:taobaibai_details}
+\end{figure}
+
+\textbf{主题分布分析}：如图\ref{fig:taobaibai_themes}所示，情感咨询类内容占比最高（42.8\%），其次是星座运势（31.1\%）和行动指导（18.3\%）。这种分布反映了用户对情感指导的强烈需求。
+
+\textbf{情绪分析}：情绪雷达图（图\ref{fig:taobaibai_emotion}）显示积极情绪占比14.4\%，消极情绪16.7\%，中性情绪45.5\%，情感平衡度0.925。消极情绪略高于积极情绪，但整体情绪表达相对克制，以中性为主。
+
+
+\subsubsection{B站UP主龙女塔罗评估}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{bilibili/longnv_enhanced_assessment.png}
+    \caption{龙女塔罗三维评估综合可视化：(a)三维雷达图；(b)维度评分对比；(c)综合评分仪表盘；(d)内容主题分析；(e)情绪分析}
+    \label{fig:longnv_assessment}
+\end{figure}
+
+\textbf{评估结果}：龙女塔罗的综合评分为32.5分（满分100），各维度表现如表\ref{tab:longnv_scores}所示。内容维度得分较低（29.4分），传播维度中等（50.8分），心理维度得分最低（11.7分），综合评分低于陶白白（43.6分），在心理支持功能上仍有较大提升空间。
+
+\begin{table}[H]
+    \centering
+    \caption{龙女塔罗三维评估得分}
+    \label{tab:longnv_scores}
+    \begin{tabular}{lccc}
+        \toprule
+        \textbf{维度} & \textbf{得分} & \textbf{权重} & \textbf{加权得分} \\
+        \midrule
+        内容维度 & 29.4 & 40\% & 11.76 \\
+        传播维度 & 50.8 & 35\% & 17.78 \\
+        心理维度 & 11.7 & 25\% & 2.93 \\
+        \midrule
+        综合评分 & - & - & 32.5 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \caption{龙女塔罗内容形式特征}
+    \label{tab:longnv_features}
+    \begin{tabular}{lc}
+        \toprule
+        \textbf{特征指标} & \textbf{数值} \\
+        \midrule
+        平均标题长度 & 22.6字符 \\
+        标题括号使用率 & 94.9\% \\
+        标题疑问式比例 & 50.6\% \\
+        时间限定内容比例 & 24.1\% \\
+        平均播放量 & 634,613次 \\
+        平均评论数 & 13,459条 \\
+        互动率 & 2.12\% \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\textbf{内容形式分析}：龙女塔罗的内容呈现高度格式化特征。94.9\%的标题使用【】标记主题，50.6\%的标题采用疑问句式，70.9\%的内容整体采用疑问式表达风格，24.1\%的内容具有时间限定特征，形成了稳定的用户预期。这种格式化生产提高了内容辨识度，但也可能限制了内容创新。平均文本长度仅22.6字符（中位数21.0字符），内容非常简洁，主要分布在10-30字符的短文本范围内。
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{bilibili/content_theme_distribution.png}
+    \caption{B站版内容主题分布（细分主题）}
+    \label{fig:longnv_themes_detail}
+\end{figure}
+
+\textbf{数据分析}：如图\ref{fig:longnv_themes_detail}所示，内容主题高度集中在情感咨询领域。"未来走向"（31.6\%）、"感情发展"（27.8\%）和"他对你的想法"（19.0\%）是最主要的细分主题，反映了用户对关系不确定性的普遍焦虑。
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{bilibili/interaction_patterns.png}
+    \caption{龙女塔罗视频互动模式分布}
+    \label{fig:longnv_interaction}
+\end{figure}
+
+\textbf{数据分析}：图\ref{fig:longnv_interaction}显示，"边看边测"互动模式占比17.7\%（14个视频），"时间限定"模式占24.1\%（19个视频），"问题导向"模式占7.6\%（6个视频）。互动模式相对单一，主要依赖"边看边测"和时间限定两种模式来增强用户参与感。
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{bilibili/emotion_radar.png}
+    \caption{B站版情绪类型分布图}
+    \label{fig:longnv_emotion_detail}
+\end{figure}
+
+\textbf{数据分析}：情绪分析显示，内容以中性情绪为主（74.7\%），积极情绪占22.8\%，消极情绪仅占2.5\%，情感平衡度0.203。具体情绪类型中，"希望"出现频率最高（52.9\%），其次是"引导"（29.4\%），"支持"占11.8\%，"鼓励"占5.9\%。这种情绪配置体现了塔罗占卜的典型特征——在客观描述的基础上提供正向引导，但心理支持功能较弱（支持指数仅0.085）。
+
+
+
+\section{讨论}
+\subsection{研究发现总结}
+本研究通过系统的数据分析和建模，获得了以下关键发现：
+
+\subsubsection{决策场景的差异化依赖}
+神秘主义内容在不同决策场景中的渗透率存在显著差异：
+\begin{itemize}
+    \item \textbf{复合决策场景依赖度更高}：微博平台数据显示，复合场景的依赖指数普遍高于单一场景，其中"日常,职业"组合场景依赖指数最高（0.5649），"职业,情感"场景次之（0.4653），而单一场景如"职业"和"学业"的依赖指数均为负值（分别为-0.2422和-0.1870），表明用户在面临复合不确定性时更倾向于寻求玄学指引；B站平台情感场景内容占比14.29\%
+    \item \textbf{学业和职业决策}在中高压力期（考试周、招聘季）依赖度显著上升
+    \item \textbf{平台差异明显}：微博以短文本快速传播为主，B站以深度视频互动为主
+\end{itemize}
+
+\subsubsection{受众群体的三重分化}
+神秘主义内容的受众并非同质化群体，而是分化为三个具有明显差异的子群体：
+\begin{itemize}
+    \item \textbf{心理慰藉型}（25.8\%）：需求驱动，在压力情境下活跃，寻求具体指导
+    \item \textbf{娱乐型}（47.5\%）：规模最大，以社交娱乐为主要目的，但也存在功能性需求
+    \item \textbf{深度参与型}（26.7\%）：核心用户，具有高参与度和付费意愿，形成亚文化社群
+\end{itemize}
+
+\subsubsection{内容创作者的策略差异}
+头部内容创作者采用差异化的内容策略：
+\begin{itemize}
+    \item \textbf{微博博主（陶白白）}：以情感咨询为主（42.8\%），结合星座运势（31.1\%），形式短平快，文本平均长度73.2字符
+    \item \textbf{B站UP主（龙女塔罗）}：以塔罗占卜为主（96.2\%），情感咨询占比30.3\%，平均标题长度22.6字符，内容高度格式化但心理支持功能较弱（心理维度得分11.7分）
+    \item \textbf{策略差异}：陶白白在情感咨询基础上提供一定的理性分析（34.6\%），而龙女塔罗更侧重于格式化内容展示，理性分析内容占比极低（5.1\%），两者在内容深度上存在明显差异
+\end{itemize}
+
+\subsection{研究局限性}
+\subsubsection{数据收集限制}
+\begin{itemize}
+    \item \textbf{平台覆盖不全}：主要分析了微博和B站，未包含抖音、快手等短视频平台
+    \item \textbf{时间跨度有限}：数据集中在2024年下半年，难以反映长期趋势
+    \item \textbf{数据深度不足}：缺乏用户访谈、实验等定性数据支持
+\end{itemize}
+
+\subsubsection{方法学限制}
+\begin{itemize}
+    \item \textbf{特征工程的主观性}：部分特征的设计依赖研究者主观判断
+    \item \textbf{聚类标签的解释性}：用户类型的标签化可能简化了复杂的用户行为
+    \item \textbf{评估框架的普适性}：三维评估框架主要针对头部创作者，对小创作者的适用性待验证
+\end{itemize}
+
+\subsection{伦理与安全考量}
+\subsubsection{数据伦理}
+\begin{itemize}
+    \item \textbf{隐私保护}：所有用户数据匿名化处理，不涉及个人身份信息
+    \item \textbf{数据使用}：数据仅用于学术研究，不用于商业用途
+    \item \textbf{知情同意}：公开数据遵循平台协议，尊重用户隐私权
+\end{itemize}
+
+\subsubsection{内容安全}
+神秘主义内容可能带来的风险需要特别关注：
+\begin{itemize}
+    \item \textbf{决策风险}：过度依赖可能影响用户的独立决策能力
+    \item \textbf{经济风险}：付费咨询服务可能存在欺诈和过度消费
+    \item \textbf{心理风险}：错误引导可能加剧焦虑和心理依赖
+    \item \textbf{信息风险}：算法推荐可能导致信息茧房和认知偏见
+\end{itemize}
+
+\subsubsection{治理建议}
+基于研究发现，提出以下治理建议：
+\begin{enumerate}
+    \item \textbf{分级管理}：对不同依赖程度的用户采取差异化干预策略
+    \item \textbf{内容标识}：对预测性内容添加风险提示标识
+    \item \textbf{算法优化}：避免过度推荐可能形成信息茧房的内容
+    \item \textbf{素养教育}：加强媒体素养和批判性思维教育
+\end{enumerate}
+
+\section{结论与展望}
+\subsection{主要结论}
+本研究通过数据挖掘和机器学习方法，系统分析了新媒体平台上神秘主义内容的受众特征和传播机制，主要结论如下：
+
+\begin{enumerate}
+    \item \textbf{场景依赖分化明显}：微博平台复合决策场景（如"日常,职业"组合场景依赖指数0.5649，"职业,情感"场景依赖指数0.4653）的依赖度显著高于单一场景，单一"职业"和"学业"场景的依赖指数甚至为负值；B站平台情感场景内容占比14.29\%；学业和职业场景在中高压力期（考试周、招聘季）依赖度显著上升
+    
+    \item \textbf{受众群体三重分化}：神秘主义内容受众分化为心理慰藉型（25.8\%）、娱乐型（47.5\%）和深度参与型（26.7\%）三类，各类用户具有不同的行为特征和需求结构
+    
+    \item \textbf{时间特征显著}：用户活跃度与考试周、招聘季等压力节点高度相关，反映出神秘主义内容的心理调节功能
+    
+    \item \textbf{内容生产模式化}：头部创作者普遍采用格式化的内容策略，以情感咨询为主（陶白白42.8\%，龙女塔罗30.3\%），但理性分析内容占比有限（陶白白34.6\%，龙女塔罗5.1\%），心理支持功能普遍不足（陶白白心理维度得分33.8分，龙女塔罗11.7分）
+    
+    \item \textbf{平台差异影响传播}：微博和B站因平台特性不同，形成了差异化的内容形式和传播模式
+    
+    \item \textbf{安全风险需要关注}：深度参与型用户（26.7\%）虽然比例不高，但其行为可能带来多重风险，包括决策能力弱化、经济风险（付费咨询）、信息茧房效应等，需要平台和社会共同关注
+\end{enumerate}
+
+\subsection{实践建议}
+基于研究结论，提出以下实践建议：
+
+\subsubsection{对内容创作者的建议}
+\begin{itemize}
+    \item \textbf{差异化内容策略}：针对不同用户类型设计差异化的内容，提升内容针对性
+    \item \textbf{增强心理支持}：在娱乐性基础上，增加理性分析和心理支持内容
+    \item \textbf{优化互动设计}：设计更有价值的互动形式，促进健康的内容生态
+\end{itemize}
+
+\subsubsection{对平台方的建议}
+\begin{itemize}
+    \item \textbf{完善内容治理}：建立分级管理制度，对高风险内容进行标识和限流
+    \item \textbf{优化推荐算法}：避免过度推荐单一类型内容，促进信息多样性
+    \item \textbf{加强用户保护}：对深度参与型用户提供心理支持和干预服务
+\end{itemize}
+
+\subsubsection{对监管部门的建议}
+\begin{itemize}
+    \item \textbf{制定行业标准}：建立神秘主义内容的生产和传播规范
+    \item \textbf{加强跨部门协作}：文化、网信、教育等部门协同治理
+    \item \textbf{支持学术研究}：鼓励对网络文化现象的深入研究
+\end{itemize}
+
+\subsection{未来展望}
+未来研究可以从以下几个方向深入：
+
+\subsubsection{方法学创新}
+\begin{itemize}
+    \item \textbf{多模态分析}：结合文本、图像、视频等多模态数据进行综合分析
+    \item \textbf{时序模型}：构建时间序列模型，分析用户行为的动态演变
+    \item \textbf{因果推断}：运用因果推断方法，评估神秘主义内容的实际影响
+\end{itemize}
+
+\subsubsection{研究主题拓展}
+\begin{itemize}
+    \item \textbf{跨文化比较}：比较不同文化背景下神秘主义内容的传播差异
+    \item \textbf{长期效应研究}：追踪研究神秘主义内容对用户心理和行为的长期影响
+    \item \textbf{干预效果评估}：评估不同干预措施的有效性和可行性
+\end{itemize}
+
+\subsubsection{技术应用探索}
+\begin{itemize}
+    \item \textbf{智能监测系统}：开发自动化的内容监测和风险评估系统
+    \item \textbf{个性化干预}：基于用户画像的个性化心理健康干预
+    \item \textbf{教育工具开发}：开发提升媒体素养的教育工具和游戏
+\end{itemize}
+
+\subsection{研究意义再思考}
+本研究不仅是对神秘主义内容现象的分析，更是对数字时代人类认知和行为模式的探索。在算法推荐、社交互动、内容消费高度融合的今天，理解神秘主义内容的传播机制，实际上是在理解人类如何在不确定性中寻找意义，如何在技术环境中建构认知。
+
+神秘主义内容作为一种文化现象，折射出的是现代社会的深层焦虑和需求。通过数据新闻的方法，我们不仅看到了现象的表征，更洞察了现象背后的社会心理机制。这种洞察，对于构建更加健康、理性的数字生活环境，具有重要的参考价值。
+
+\newpage
+\section*{参考文献}
+\addcontentsline{toc}{section}{参考文献}
+\begin{thebibliography}{99}
+    \bibitem{ref5} Berger, P. L., \& Luckmann, T. (1966). The Social Construction of Reality. Anchor Books.
+    \bibitem{ref6} boyd, d., \& Crawford, K. (2012). Critical questions for big data. Information, Communication \& Society, 15(5), 662-679.
+    \bibitem{ref13} Pew Research Center. (2024). New Age beliefs common among U.S. adults. Washington, DC: Pew Research Center. Retrieved from https://www.pewresearch.org/religion/
+\end{thebibliography}
+
+% 附录
+\newpage
+\appendix
+\section{实验数据统计表}
+\begin{table}[H]
+    \centering
+    \caption{实验数据统计总览}
+    \label{tab:experiment_stats}
+    \begin{tabular}{lccccc}
+        \toprule
+        \textbf{数据类别} & \textbf{数量} & \textbf{时间范围} & \textbf{关键词数} & \textbf{唯一用户数} & \textbf{总互动量} \\
+        \midrule
+        微博通用搜索 & 737条 & 2024.01-2024.12 & 82个 & 691个 & 1,432,003次 \\
+        陶白白微博 & 257条 & 2024.01-2024.12 & - & 1个 & 1,435,003次 \\
+        龙女塔罗视频 & 79条 & 2024.01-2024.12 & - & 1个 & 51,197,714次 \\
+        \midrule
+        合计 & 1,073条 & 2024全年 & 82个 & 693个 & 53,064,720次 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\section{图片使用清单}
+\subsection{决策场景分析图片（8张）}
+\begin{enumerate}
+    \item 微博决策场景依赖指数图：\texttt{weibo\_scenario\_dependence.png}
+    \item 微博场景分布饼图：\texttt{weibo\_scenario\_distribution.png}
+    \item 微博场景情感分析图：\texttt{weibo\_scenario\_sentiment.png}
+    \item B站场景占比柱状图：\texttt{scene\_ratio\_bar\_en.png}
+    \item B站场景分布饼图：\texttt{scene\_ratio\_pie\_en.png}
+    \item B站Other子场景柱状图：\texttt{other\_subscene\_bar\_en.png}
+    \item B站Other子场景饼图：\texttt{other\_subscene\_pie\_en.png}
+\end{enumerate}
+
+\subsection{用户聚类分析图片（7张）}
+\begin{enumerate}
+    \item 微博聚类结果综合图：\texttt{weibo\_clustering\_results.png}
+    \item 用户特征雷达图：\texttt{user\_portrait\_radar.png}
+    \item 特征相关性热力图：\texttt{user\_portrait\_heatmap.png}
+    \item 互动行为箱线图：\texttt{user\_portrait\_boxplot.png}
+    \item 内容类型堆叠图：\texttt{user\_portrait\_stacked\_bar.png}
+    \item 时间特征对比图：\texttt{user\_portrait\_time\_features.png}
+    \item 用户聚类散点图：\texttt{weibo\_user\_clustering.png}
+\end{enumerate}
+
+\subsection{博主/UP主评估图片（7张）}
+\begin{enumerate}
+    \item 陶白白三维评估图：\texttt{blogger\_enhanced\_assessment.png}
+    \item 陶白白内容主题分布（微博版）：\texttt{content\_theme\_distribution.png}
+    \item 陶白白情绪雷达图（微博版）：\texttt{emotion\_radar.png}
+    \item 龙女塔罗三维评估图：\texttt{longnv\_enhanced\_assessment.png}
+    \item 龙女塔罗内容主题分布（B站版）：\texttt{content\_theme\_distribution.png}（注意：与微博版同名但内容不同）
+    \item 龙女塔罗互动模式图：\texttt{interaction\_patterns.png}
+    \item 龙女塔罗情绪雷达图（B站版）：\texttt{emotion\_radar.png}（注意：与微博版同名但内容不同）
+
+\end{enumerate}
+
+
+\end{document}

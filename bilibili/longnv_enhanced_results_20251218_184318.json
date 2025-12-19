@@ -1,0 +1,227 @@
+{
+  "UP主名称": "龙女塔罗",
+  "评估时间": "2025-12-18 18:43:18",
+  "评估版本": "增强版（针对有限数据）",
+  "数据概况": {
+    "total_posts": 280,
+    "analysis_posts": 129,
+    "interaction_data_available": "True"
+  },
+  "内容维度得分": 33.456301218161684,
+  "传播维度得分": 66.22252408637874,
+  "心理维度得分": 30.036824755997856,
+  "综合评分": 44.0696101064967,
+  "评估等级": "不足",
+  "治理建议": "需要全面优化，重新评估内容策略和用户定位",
+  "内容维度详情": {
+    "text_length": {
+      "mean": 26.573643410852714,
+      "median": 24.0,
+      "std": 13.292252909236296,
+      "min": "4",
+      "max": "78"
+    },
+    "length_distribution": {
+      "中等(20-30)": 0.3333333333333333,
+      "短(10-20)": 0.2868217054263566,
+      "长(30-50)": 0.2558139534883721,
+      "较长(50-100)": 0.06976744186046512,
+      "超短(<10)": 0.05426356589147287,
+      "超长(>100)": 0.0
+    },
+    "themes": {
+      "塔罗占卜": {
+        "post_count": "61",
+        "post_ratio": 0.4728682170542636,
+        "keyword_density": 25.962660443407234
+      },
+      "情感咨询": {
+        "post_count": "23",
+        "post_ratio": 0.17829457364341086,
+        "keyword_density": 9.918319719953326
+      },
+      "职业发展": {
+        "post_count": "14",
+        "post_ratio": 0.10852713178294573,
+        "keyword_density": 6.417736289381563
+      },
+      "学业指导": {
+        "post_count": "19",
+        "post_ratio": 0.14728682170542637,
+        "keyword_density": 7.292882147024504
+      },
+      "心理分析": {
+        "post_count": "4",
+        "post_ratio": 0.031007751937984496,
+        "keyword_density": 2.333722287047841
+      },
+      "行动指导": {
+        "post_count": "52",
+        "post_ratio": 0.40310077519379844,
+        "keyword_density": 16.919486581096848
+      },
+      "运势预测": {
+        "post_count": "38",
+        "post_ratio": 0.29457364341085274,
+        "keyword_density": 12.543757292882146
+      }
+    },
+    "content_features": {
+      "rational_mean": 0.17054263565891473,
+      "action_mean": 0.2713178294573643,
+      "comfort_mean": 0.031007751937984496,
+      "has_rational": 0.16279069767441862,
+      "has_action": 0.2713178294573643,
+      "has_comfort": 0.031007751937984496
+    },
+    "quality": {
+      "theme_diversity": 0.8571428571428571,
+      "avg_length_score": 0.5314728682170543,
+      "structure_score": 0.2713178294573643,
+      "rationality_score": 0.16279069767441862
+    },
+    "signatures": {
+      "塔罗占卜": 0.015503875968992248,
+      "塔罗牌": 0.031007751937984496,
+      "情感咨询": 0.0,
+      "复合建议": 0.0,
+      "心理分析": 0.0,
+      "运势预测": 0.015503875968992248,
+      "行动指导": 0.0,
+      "塔罗解读": 0.0
+    },
+    "signature_match": 0.0
+  },
+  "传播维度详情": {
+    "topic_coverage": 0.4607142857142857,
+    "participant_count": 98,
+    "active_users": 13,
+    "user_concentration": 0.2248853029583927,
+    "avg_views": 97388.25581395348,
+    "avg_comments": 1201.2403100775193,
+    "potential": 0.9869412790697674,
+    "hashtags": {
+      "total_tags": 4,
+      "top_hashtags": {
+        "6：INTJ的愛情｜Sherry&": 1,
+        "MBTI ": 1,
+        "日历 ": 1,
+        "传统文化": 1
+      }
+    }
+  },
+  "心理维度详情": {
+    "emotion_analysis": {
+      "positive": {
+        "count": "19",
+        "ratio": 0.14728682170542637,
+        "posts_with": "19"
+      },
+      "negative": {
+        "count": "12",
+        "ratio": 0.09302325581395349,
+        "posts_with": "12"
+      },
+      "neutral": {
+        "count": "98",
+        "ratio": 0.7596899224806202,
+        "posts_with": "98"
+      }
+    },
+    "emotion_balance": {
+      "positive_ratio": 0.14728682170542637,
+      "negative_ratio": 0.09302325581395349,
+      "balance_score": 0.7751293006521249,
+      "dominant_emotion": "positive"
+    },
+    "psychological_needs": {
+      "情感需求": {
+        "posts": "22",
+        "ratio": 0.17054263565891473,
+        "intensity": 0.24806201550387597
+      },
+      "认知需求": {
+        "posts": "13",
+        "ratio": 0.10077519379844961,
+        "intensity": 0.10077519379844961
+      },
+      "安全需求": {
+        "posts": "3",
+        "ratio": 0.023255813953488372,
+        "intensity": 0.023255813953488372
+      },
+      "归属需求": {
+        "posts": "0",
+        "ratio": 0.0,
+        "intensity": 0.0
+      },
+      "成长需求": {
+        "posts": "3",
+        "ratio": 0.023255813953488372,
+        "intensity": 0.023255813953488372
+      },
+      "尊重需求": {
+        "posts": "1",
+        "ratio": 0.007751937984496124,
+        "intensity": 0.007751937984496124
+      }
+    },
+    "primary_needs": {
+      "情感需求": 0.17054263565891473,
+      "认知需求": 0.10077519379844961,
+      "安全需求": 0.023255813953488372
+    },
+    "support_analysis": {
+      "advice_given": {
+        "posts": "54",
+        "ratio": 0.4186046511627907,
+        "effectiveness": 4.5
+      },
+      "comfort_provided": {
+        "posts": "1",
+        "ratio": 0.007751937984496124,
+        "effectiveness": 0.08333333333333333
+      },
+      "solution_offered": {
+        "posts": "1",
+        "ratio": 0.007751937984496124,
+        "effectiveness": 0.08333333333333333
+      },
+      "hope_inspired": {
+        "posts": "9",
+        "ratio": 0.06976744186046512,
+        "effectiveness": 0.75
+      }
+    },
+    "support_index": 0.12596899224806202,
+    "behavior_analysis": {
+      "action_intent": {
+        "posts": "17",
+        "ratio": 0.13178294573643412,
+        "engagement": 13.178294573643413
+      },
+      "goal_setting": {
+        "posts": "2",
+        "ratio": 0.015503875968992248,
+        "engagement": 1.550387596899225
+      },
+      "progress_sharing": {
+        "posts": "9",
+        "ratio": 0.06976744186046512,
+        "engagement": 6.976744186046512
+      },
+      "help_seeking": {
+        "posts": "2",
+        "ratio": 0.015503875968992248,
+        "engagement": 1.550387596899225
+      }
+    },
+    "behavior_index": 0.05813953488372093,
+    "anxiety_management": {
+      "anxiety_mentioned": 0.023255813953488372,
+      "solutions_provided": 0.015503875968992248,
+      "targeted_solutions": 0.3333333333333333,
+      "anxiety_coverage": 0.007751937984496124
+    }
+  }
+}
