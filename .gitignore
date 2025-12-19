@@ -1,0 +1,76 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+*.egg-info/
+dist/
+build/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 数据文件（大文件，建议使用Git LFS）
+*.csv
+*.json
+*.xlsx
+*.xls
+
+# 日志文件
+*.log
+debug.log
+
+# LaTeX编译文件
+*.aux
+*.log
+*.out
+*.toc
+*.fdb_latexmk
+*.fls
+*.synctex.gz
+*.bbl
+*.blg
+
+# 临时文件
+*.tmp
+*.temp
+*.bak
+*.cache
+
+# 系统文件
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 图片文件（可选：如果图片太大，可以忽略）
+# *.png
+# *.jpg
+# *.jpeg
+
+# 报告中间文件
+报告/*.aux
+报告/*.log
+报告/*.out
+报告/*.toc
+报告/*.fdb_latexmk
+报告/*.fls
+
+# 爬虫调试文件
+debug_responses/
+*.html
+
+# 特定数据文件（如包含敏感信息）
+weibo-search-master/weibo/weibo_data_*.json
+bilibili/*.csv
+
