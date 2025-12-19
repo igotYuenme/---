@@ -40,10 +40,6 @@ news_security/
 │       ├── *.json                    # 数据文件
 │       └── *.png                     # 可视化图表
 │
-├── xiaohongshu/                      # 小红书数据分析（可选）
-│   ├── xiaohongshu_data.py
-│   └── user_portrait_analysis.py
-│
 ├── 报告/                             # 实验报告
 │   └── 新闻安全.tex                  # LaTeX报告源文件
 │
